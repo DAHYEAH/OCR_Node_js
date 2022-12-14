@@ -3,7 +3,7 @@
 <mapper namespace="Mapper">  
   <select id="insertUserQuery">
     <!-- SELECT * FROM sign_up -->
-    INSERT INTO sign_up (Fullname, Userid, Email, Password) VALUES (:Fullname, :Userid, :Email, :Password)
+    INSERT INTO sow (sowID, brith) VALUES (:Fullname, :Userid, :Email, :Password)
   </select>
   <select id="findUserQuery">
     SELECT

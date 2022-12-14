@@ -54,7 +54,7 @@ module.exports={
         //     res.send("fail")
         //   }
         // });
-        // var query = mybatisMapper.getStatement('userMapper', 'insertUserQuery', param, format)
+        // var query = mybatisMapper.getStatement('userMapper', 'insertUserQuery', params, format)
         mysql.query("INSERT INTO sign_up VALUES (?,?,?,?)" , params, (error, rows) => {
           res.json(rows)
         })
@@ -75,20 +75,26 @@ module.exports={
         // let salt = result[0].salt;
         var salt = 10;
         let hashPassword = crypto.createHash("sha512").update(inputPassword + salt).digest("hex");
-        // console.log(salt)
-        // console.log(dbPassword)
-        // console.log(hashPassword)
+
         if(dbPassword === hashPassword){
           console.log("-------------success login");
           req.session.Userid = body.Userid;
           req.session.is_logined = true;
+          res.send('success login');
         } else {
-          console.log("-------------fail login")
+          console.log("-------------fail login");
+          res.send('fail login')
         }
-        res.send('success login')
+        
     },
     logoutpage : function(req, res, next){
-        req.session.destroy();  // 내부 sessions 폴터 캐쉬 삭제
+        try{
+            req.session.destroy()
+            console.log('destroy success')
+        }// 내부 sessions 폴터 캐쉬 삭제
+        catch(err){
+            console.log('destroy error')
+        }
         res.clearCookie('sid')
         res.send('logout')
     },
